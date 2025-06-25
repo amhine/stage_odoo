@@ -9,7 +9,7 @@ class AuthController(http.Controller):
     @http.route('/fiscal/login', type='http', auth='public', website=True, csrf=False)
     def fiscal_login_page(self, **kw):
         """Page de connexion pour les déclarations fiscales"""
-        # Rediriger si déjà connecté
+        
         if request.session.uid:
             return request.redirect('/fiscal/dashboard')
             
@@ -20,16 +20,19 @@ class AuthController(http.Controller):
         return request.render('ma_dgi_edi.auth_login_template', values)
 
     @http.route('/fiscal/authenticate', type='http', auth='public', methods=['POST'], csrf=False)
+    
     def fiscal_authenticate(self, **post):
         """Traitement de l'authentification"""
         email = post.get('email', '').strip()
         password = post.get('password', '')
         
+        
+        _logger.info(f"[AUTH DEBUG] Tentative connexion avec login='{email}' et password='{password}'")
+        
         if not email or not password:
             return self._redirect_with_error('Veuillez remplir tous les champs')
         
         try:
-            # Authentification standard d'Odoo
             uid = request.session.authenticate(request.session.db, email, password)
             if uid:
                 _logger.info(f"Connexion réussie pour l'utilisateur: {email}")
@@ -73,7 +76,6 @@ class AuthController(http.Controller):
             
         user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
         if user:
-            # Ici vous devriez implémenter l'envoi d'email
             return request.redirect('/fiscal/login?message=Instructions envoyées par email')
         else:
             return request.redirect('/fiscal/forgot-password?error=Email non trouvé')

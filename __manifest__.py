@@ -7,7 +7,7 @@
     'category': 'Accounting',
     'depends': [
         'base',
-        'web',  # utile si tu utilises des assets ou des contrôleurs
+        'web',  
     ],
     'data': [
         'views/auth_template.xml',
