@@ -62,27 +62,9 @@
     position: relative;
 }
 
-.password-toggle {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #999;
-}
 
-.password-toggle:hover {
-    color: #667eea;
-}
 
-.form-check {
-    margin: 20px 0;
-}
 
-.form-check-label {
-    color: #666;
-    font-size: 14px;
-}
 
 .fiscal-btn-login {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

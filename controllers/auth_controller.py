@@ -20,24 +20,32 @@ class AuthController(http.Controller):
         return request.render('ma_dgi_edi.auth_login_template', values)
 
     @http.route('/fiscal/authenticate', type='http', auth='public', methods=['POST'], csrf=False)
-    
     def fiscal_authenticate(self, **post):
         """Traitement de l'authentification"""
         email = post.get('email', '').strip()
         password = post.get('password', '')
         
-        
-        _logger.info(f"[AUTH DEBUG] Tentative connexion avec login='{email}' et password='{password}'")
+        _logger.info(f"[AUTH DEBUG] Tentative connexion avec login='{email}'")
         
         if not email or not password:
             return self._redirect_with_error('Veuillez remplir tous les champs')
         
         try:
-            uid = request.session.authenticate(request.session.db, email, password)
+            # Utilisation correcte de l'authentification Odoo
+            db = request.session.db or request.env.cr.dbname
+            uid = request.session.authenticate(db, email, password)
+            
             if uid:
-                _logger.info(f"Connexion réussie pour l'utilisateur: {email}")
-                return request.redirect('/fiscal/dashboard')
+                # Vérifier que l'utilisateur existe et est actif
+                user = request.env['res.users'].sudo().browse(uid)
+                if user.exists() and user.active:
+                    _logger.info(f"Connexion réussie pour l'utilisateur: {email}")
+                    return request.redirect('/fiscal/dashboard')
+                else:
+                    _logger.warning(f"Utilisateur inactif ou inexistant: {email}")
+                    return self._redirect_with_error('Compte utilisateur inactif')
             else:
+                _logger.warning(f"Échec d'authentification pour: {email}")
                 return self._redirect_with_error('Email ou mot de passe incorrect')
                 
         except Exception as e:
@@ -53,13 +61,23 @@ class AuthController(http.Controller):
     @http.route('/fiscal/dashboard', type='http', auth='user', website=True)
     def fiscal_dashboard(self):
         """Tableau de bord après connexion"""
-        return request.render('ma_dgi_edi.dashboard_template', {
-            'user': request.env.user,
-        })
+        try:
+            # Vérifier que l'utilisateur est bien connecté
+            if not request.env.user or request.env.user._is_public():
+                return request.redirect('/fiscal/login')
+                
+            return request.render('ma_dgi_edi.dashboard_template', {
+                'user': request.env.user,
+            })
+        except Exception as e:
+            _logger.error(f"Erreur dashboard: {str(e)}")
+            return request.redirect('/fiscal/login?error=Erreur d\'accès au tableau de bord')
 
     def _redirect_with_error(self, error_message):
         """Rediriger avec message d'erreur"""
-        return request.redirect(f'/fiscal/login?error={error_message}')
+        import urllib.parse
+        encoded_error = urllib.parse.quote(error_message)
+        return request.redirect(f'/fiscal/login?error={encoded_error}')
 
     @http.route('/fiscal/forgot-password', type='http', auth='public', website=True)
     def forgot_password_page(self):
@@ -73,9 +91,15 @@ class AuthController(http.Controller):
         
         if not email:
             return request.redirect('/fiscal/forgot-password?error=Veuillez saisir votre email')
-            
-        user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
-        if user:
-            return request.redirect('/fiscal/login?message=Instructions envoyées par email')
-        else:
-            return request.redirect('/fiscal/forgot-password?error=Email non trouvé')
+        
+        try:    
+            user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
+            if user:
+                # Ici vous pouvez ajouter la logique d'envoi d'email
+                # user.action_reset_password()
+                return request.redirect('/fiscal/login?message=Instructions envoyées par email')
+            else:
+                return request.redirect('/fiscal/forgot-password?error=Email non trouvé')
+        except Exception as e:
+            _logger.error(f"Erreur reset password: {str(e)}")
+            return request.redirect('/fiscal/forgot-password?error=Erreur lors de la réinitialisation')
