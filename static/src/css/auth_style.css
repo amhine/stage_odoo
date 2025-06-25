@@ -1,0 +1,177 @@
+/* Styles pour l'authentification fiscale */
+.fiscal-auth-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.fiscal-auth-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.fiscal-auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.fiscal-auth-header h2 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.fiscal-auth-header p {
+    color: #666;
+    margin: 0;
+}
+
+.fiscal-auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.fiscal-auth-form label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.fiscal-auth-form .form-control {
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.fiscal-auth-form .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.password-input-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+}
+
+.password-toggle:hover {
+    color: #667eea;
+}
+
+.form-check {
+    margin: 20px 0;
+}
+
+.form-check-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.fiscal-btn-login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.fiscal-btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.fiscal-auth-footer {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.forgot-password-link {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+.fiscal-help-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    max-width: 300px;
+    margin-left: 20px;
+}
+
+.fiscal-help-section h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.fiscal-help-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fiscal-help-section li {
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fiscal-auth-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .fiscal-help-section {
+        margin-left: 0;
+        margin-top: 20px;
+        max-width: 100%;
+    }
+    
+    .fiscal-auth-card {
+        padding: 30px 20px;
+    }
+}
+
+/* Messages d'alerte */
+.alert {
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
