@@ -1,4 +1,4 @@
-/* Styles pour l'authentification fiscale */
+
 .fiscal-auth-container {
     min-height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -140,7 +140,6 @@
     }
 }
 
-/* Messages d'alerte */
 .alert {
     border-radius: 8px;
     padding: 12px 15px;

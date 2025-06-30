@@ -22,29 +22,20 @@
                             <p>Accédez à vos déclarations fiscales</p>
                         </div>
                         
-                        <!-- Affichage des erreurs depuis les paramètres URL -->
                         <t t-if="request.httprequest.args.get('error')">
                             <div class="alert alert-danger" role="alert">
                                 <t t-esc="request.httprequest.args.get('error')"/>
                             </div>
                         </t>
                         
-                        <!-- Affichage des messages de succès -->
                         <t t-if="request.httprequest.args.get('message')">
                             <div class="alert alert-success" role="alert">
                                 <t t-esc="request.httprequest.args.get('message')"/>
                             </div>
                         </t>
-                        
-                        <!-- Affichage des erreurs passées via le contexte -->
-                        <t t-if="error">
-                            <div class="alert alert-danger" role="alert">
-                                <t t-esc="error"/>
-                            </div>
-                        </t>
+                     
                         
                         <form action="/fiscal/authenticate" method="post" class="fiscal-auth-form">
-                            <!-- Token CSRF (optionnel car csrf=False) -->
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             
                             <div class="form-group">
@@ -142,7 +133,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h1>Bienvenue, <t t-esc="user.name"/></h1>
+                                
                                 <a href="/fiscal/logout" class="btn btn-secondary">
                                     <i class="fa fa-sign-out"></i> Se déconnecter
                                 </a>

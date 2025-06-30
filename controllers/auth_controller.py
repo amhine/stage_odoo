@@ -31,12 +31,10 @@ class AuthController(http.Controller):
             return self._redirect_with_error('Veuillez remplir tous les champs')
         
         try:
-            # Utilisation correcte de l'authentification Odoo
             db = request.session.db or request.env.cr.dbname
             uid = request.session.authenticate(db, email, password)
             
             if uid:
-                # Vérifier que l'utilisateur existe et est actif
                 user = request.env['res.users'].sudo().browse(uid)
                 if user.exists() and user.active:
                     _logger.info(f"Connexion réussie pour l'utilisateur: {email}")
@@ -62,7 +60,6 @@ class AuthController(http.Controller):
     def fiscal_dashboard(self):
         """Tableau de bord après connexion"""
         try:
-            # Vérifier que l'utilisateur est bien connecté
             if not request.env.user or request.env.user._is_public():
                 return request.redirect('/fiscal/login')
                 
@@ -95,8 +92,6 @@ class AuthController(http.Controller):
         try:    
             user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
             if user:
-                # Ici vous pouvez ajouter la logique d'envoi d'email
-                # user.action_reset_password()
                 return request.redirect('/fiscal/login?message=Instructions envoyées par email')
             else:
                 return request.redirect('/fiscal/forgot-password?error=Email non trouvé')
