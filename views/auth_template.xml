@@ -7,7 +7,7 @@
             <script src="/ma_dgi_edi/static/src/js/auth.js"></script>
         </template>
 
-        <!-- Template de connexion -->
+        <!-- connexion -->
         <template id="auth_login_template" name="Connexion Déclarations Fiscales">
             <t t-call="website.layout">
                 <t t-set="title">Connexion - Déclarations Fiscales</t>
@@ -33,33 +33,23 @@
                                 <t t-esc="request.httprequest.args.get('message')"/>
                             </div>
                         </t>
-                     
                         
                         <form action="/fiscal/authenticate" method="post" class="fiscal-auth-form">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       class="form-control" 
-                                       placeholder="votre.email@exemple.com"
-                                       t-att-value="login or ''"
-                                       required="required"
-                                       autocomplete="username"/>
+                                <input type="email" id="email"  name="email" 
+                                       class="form-control" placeholder="votre.email@exemple.com"
+                                       t-att-value="login or ''" required="required" autocomplete="username"/>
                             </div>
                             
                             <div class="form-group">
                                 <label for="password">Mot de passe</label>
                                 <div class="password-input-container">
                                     <input type="password" 
-                                           id="password" 
-                                           name="password" 
-                                           class="form-control" 
-                                           placeholder="********"
-                                           required="required"
-                                           autocomplete="current-password"/>
+                                           id="password"  name="password" class="form-control" 
+                                           placeholder="********" required="required" autocomplete="current-password"/>
                                 </div>
                             </div>
                             
@@ -78,7 +68,7 @@
             </t>
         </template>
         
-        <!-- Template mot de passe oublié -->
+        <!-- mot de passe oublié -->
         <template id="forgot_password_template" name="Mot de passe oublié">
             <t t-call="website.layout">
                 <t t-set="title">Mot de passe oublié</t>
@@ -103,11 +93,8 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       class="form-control" 
-                                       placeholder="votre.email@exemple.com"
-                                       required="required"/>
+                                       id="email" name="email" class="form-control" 
+                                       placeholder="votre.email@exemple.com" required="required"/>
                             </div>
                             
                             <button type="submit" class="btn btn-primary btn-block fiscal-btn-login">
@@ -123,7 +110,7 @@
             </t>
         </template>
         
-        <!-- Template tableau de bord -->
+        <!-- Dashbord -->
         <template id="dashboard_template" name="Tableau de bord">
             <t t-call="website.layout">
                 <t t-set="title">Tableau de bord</t>
@@ -139,8 +126,9 @@
                                 </a>
                             </div>
                             
-                            <div class="alert alert-success">
+                            <div class="alert alert-success alert-dismissible">
                                 Connexion réussie ! Vous pouvez maintenant accéder à vos déclarations fiscales.
+                                <button type="button" class="btn-close" onclick="this.parentElement.remove()">×</button>
                             </div>
                             
                             <div class="row">
@@ -162,11 +150,11 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                <i class="fa fa-user"></i> Mon profil
+                                                <i class="fa fa-user"></i> Historique déclarations
                                             </h5>
-                                            <p class="card-text">Gérez vos informations personnelles</p>
-                                            <a href="/fiscal/profile" class="btn btn-outline-primary">
-                                                Voir mon profil
+                                            <p class="card-text">Accédez à vos Historiques des déclarations fiscales</p>
+                                            <a href="/fiscal/historique" class="btn btn-outline-primary">
+                                                Voir mes historiques
                                             </a>
                                         </div>
                                     </div>
