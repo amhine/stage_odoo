@@ -1,0 +1,8 @@
+<odoo>
+    <template id="auth_assets" name="Auth Assets">
+        <!-- <script type="text/javascript" src="/website/static/src/libs/zoomodoo/zoomodoo.js"/> -->
+        <link rel="stylesheet" href="/ma_dgi_edi/static/src/css/auth_style.css"/>
+        <link rel="stylesheet" href="/web/static/lib/fontawesome/css/font-awesome.css"/>
+        <script src="/ma_dgi_edi/static/src/js/auth.js"></script>
+    </template>
+</odoo>

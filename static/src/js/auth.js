@@ -50,16 +50,6 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-setTimeout(function () {
-    const alert = document.getElementById('success-alert');
-    if (alert) {
-      alert.remove(); 
-    }
-  }, 5000);
-
-
-showSuccessAlert('Connexion réussie ! Vous pouvez maintenant accéder à vos déclarations fiscales.');
-
 
 window.addEventListener('load', function() {
     const authCard = document.querySelector('.fiscal-auth-card');
@@ -94,3 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
         showAlert(message, 'success');
     }
 });
+
+setTimeout(function () {
+    const alert = document.getElementById('success-alert');
+    if (alert) {
+        alert.remove();
+    }
+}, 5000);
