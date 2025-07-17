@@ -9,6 +9,8 @@ class ResUsers(models.Model):
     phone_verified = fields.Boolean('Téléphone Vérifié', default=False)
     is_tax_declarant = fields.Boolean('Déclarant Fiscal', default=False)
     
+    accountant_id = fields.Many2one('res.users', string="Comptable")
+    
     @api.constrains('login')
     def _check_email_format(self): 
         """Valider le format email"""

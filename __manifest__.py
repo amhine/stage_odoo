@@ -11,7 +11,11 @@
         'website' 
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'security/fiscal_declaration_rules.xml',
         'views/auth_template.xml',
+        'views/declarations_template.xml',
     ],
     'assets': {
     'web.assets_frontend': [

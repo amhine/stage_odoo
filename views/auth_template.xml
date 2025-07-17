@@ -8,52 +8,52 @@
         </template>
 
         <!-- connexion -->
-       <template id="auth_login_template" name="Connexion Déclarations Fiscales">
-    <t t-call="website.layout">
-        <t t-set="title">Connexion - Déclarations Fiscales</t>
-        <t t-call-assets="web.assets_frontend"/>
-        <t t-call-assets="ma_dgi_edi.auth_assets"/>
+        <template id="auth_login_template" name="Connexion Déclarations Fiscales">
+            <t t-call="website.layout">
+                <t t-set="title">Connexion - Déclarations Fiscales</t>
+                <t t-call-assets="web.assets_frontend"/>
+                <t t-call-assets="ma_dgi_edi.auth_assets"/>
 
-        <div class="fiscal-auth-container">
-            <div class="fiscal-auth-card">
-                <div class="fiscal-auth-header">
-                    <h2>Connexion</h2>
-                    <p>Accédez à vos déclarations fiscales</p>
+                <div class="fiscal-auth-container">
+                    <div class="fiscal-auth-card">
+                        <div class="fiscal-auth-header">
+                            <h2>Connexion</h2>
+                            <p>Accédez à vos déclarations fiscales</p>
+                        </div>
+
+                        <t t-if="request.httprequest.args.get('error')">
+                            <div class="alert alert-danger" role="alert">
+                                <t t-esc="request.httprequest.args.get('error')"/>
+                            </div>
+                        </t>
+
+                        <form t-att-action="'/fiscal/authenticate'" method="post" class="fiscal-auth-form">
+                            
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="login" class="form-control"
+                                    placeholder="votre.email@exemple.com"
+                                    t-att-value="login or ''" required="required" autocomplete="username"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" id="password" name="password" class="form-control"
+                                    placeholder="********" required="required" autocomplete="current-password"/>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block fiscal-btn-login">
+                                <i class="fa fa-sign-in"></i> Se connecter
+                            </button>
+                        </form>
+
+                        <div class="fiscal-auth-footer">
+                            <a href="/fiscal/forgot-password" class="forgot-password-link">Mot de passe oublié ?</a>
+                        </div>
+                    </div>
                 </div>
-
-                <t t-if="request.httprequest.args.get('error')">
-                    <div class="alert alert-danger" role="alert">
-                        <t t-esc="request.httprequest.args.get('error')"/>
-                    </div>
-                </t>
-
-                <form t-att-action="'/fiscal/authenticate'" method="post" class="fiscal-auth-form">
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="login" class="form-control"
-                               placeholder="votre.email@exemple.com"
-                               t-att-value="login or ''" required="required" autocomplete="username"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" class="form-control"
-                               placeholder="********" required="required" autocomplete="current-password"/>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block fiscal-btn-login">
-                        <i class="fa fa-sign-in"></i> Se connecter
-                    </button>
-                </form>
-
-                <div class="fiscal-auth-footer">
-                    <a href="/fiscal/forgot-password" class="forgot-password-link">Mot de passe oublié ?</a>
-                </div>
-            </div>
-        </div>
-    </t>
-</template>
+            </t>
+        </template>
 
 
         

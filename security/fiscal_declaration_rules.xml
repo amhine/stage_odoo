@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <!-- Règle pour que chaque client voit uniquement ses déclarations -->
+    <record id="fiscal_declaration_client_rule" model="ir.rule">
+      <field name="name">Client: Voir ses propres déclarations</field>
+      <field name="model_id" ref="model_fiscal_declaration"/>
+      <field name="groups" eval="[(4, ref('ma_dgi_edi.group_client'))]"/>
+      <field name="domain_force">[('user_id', '=', user.id)]</field>
+      <field name="perm_read" eval="1"/>
+      <field name="perm_write" eval="1"/>
+      <field name="perm_create" eval="1"/>
+      <field name="perm_unlink" eval="1"/>
+    </record>
+  </data>
+</odoo>

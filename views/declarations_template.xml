@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="declarations_template" name="Déclarations Fiscales">
+            <t t-call="website.layout">
+                <t t-set="title">Déclarations Fiscales</t>
+                <t t-call-assets="ma_dgi_edi.auth_assets"/>
+
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2 class="mb-0">Déclarations Fiscales</h2>
+                                <t t-if="not is_accountant">
+                                    <a href="/fr/fiscal/new-declaration" class="btn btn-primary" title="Créer une nouvelle déclaration fiscale">
+                                        <i class="fa fa-plus me-2"></i>Nouvelle Déclaration
+                                    </a>
+                                </t>
+                            </div>
+
+                            <t t-if="is_accountant">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3 class="card-title h5">Filtrer par Utilisateur</h3>
+                                        <select id="user-filter" class="form-select w-100">
+                                            <option value="">Tous les utilisateurs</option>
+                                            <t t-foreach="users" t-as="user">
+                                                <option t-att-value="user.id" t-esc="user.name"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h3 class="h5 mb-0">Liste des Déclarations</h3>
+                                    <div class="input-group w-auto">
+                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        <input type="text" id="search-declarations" class="form-control" placeholder="Rechercher une déclaration..."/>
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Type</th>
+                                                    <th>Mois</th>
+                                                    <th>Statut</th>
+                                                    <th t-if="not is_accountant">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="declarations-table">
+                                                <t t-foreach="declarations" t-as="declaration">
+                                                    <tr>
+                                                        <td t-esc="declaration.name"/>
+                                                        <td t-esc="dict(declaration._fields['declaration_type'].selection).get(declaration.declaration_type)"/>
+                                                        <td t-esc="dict(declaration._fields['month'].selection).get(declaration.month)"/>
+                                                        <td>
+                                                            <span t-att-class="'badge ' + ('bg-success' if declaration.status == 'active' else 'bg-warning' if declaration.status == 'draft' else 'bg-danger')">
+                                                                <t t-esc="dict(declaration._fields['status'].selection).get(declaration.status)"/>
+                                                            </span>
+                                                        </td>
+                                                        <td t-if="not is_accountant and declaration.status == 'draft'">
+                                                            <a t-att-href="'/fr/fiscal/activate/%s' % declaration.id" class="btn btn-success btn-sm" title="Activer cette déclaration">
+                                                                <i class="fa fa-check me-2"></i>Activer
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                        <t t-if="not declarations">
+                                            <div class="alert alert-info">Aucune déclaration fiscale trouvée.</div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-set="current_page" t-value="page or 1"/>
+                                <t t-set="total_pages" t-value="total_pages or 1"/>
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li t-att-class="'page-item' + (' disabled' if current_page == 1 else '')">
+                                        <a class="page-link" t-att-href="'/fr/fiscal/declarations?page=%s' % (current_page - 1)">Précédent</a>
+                                    </li>
+                                    <t t-foreach="range(1, total_pages + 1)" t-as="p">
+                                        <li t-att-class="'page-item' + (' active' if p == current_page else '')">
+                                            <a class="page-link" t-att-href="'/fr/fiscal/declarations?page=%s' % p" t-esc="p"/>
+                                        </li>
+                                    </t>
+                                    <li t-att-class="'page-item' + (' disabled' if current_page == total_pages else '')">
+                                        <a class="page-link" t-att-href="'/fr/fiscal/declarations?page=%s' % (current_page + 1)">Suivant</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+                
+            </t>
+        </template>
+    </data>
+</odoo>
