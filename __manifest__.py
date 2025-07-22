@@ -16,6 +16,7 @@
         'security/fiscal_declaration_rules.xml',
         'views/auth_template.xml',
         'views/declarations_template.xml',
+        'views/new_declaration_template.xml',
     ],
     'assets': {
     'web.assets_frontend': [

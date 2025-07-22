@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="new_declaration_template" name="Nouvelle Déclaration Fiscale">
+            <t t-call="website.layout">
+                <t t-set="title">Nouvelle Déclaration Fiscale</t>
+                <t t-call-assets="ma_dgi_edi.auth_assets"/>
+
+                <div class="container mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Créer une Nouvelle Déclaration Fiscale</h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <form t-att-action="'/fr/fiscal/new-declaration'" method="post">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Nom de la Déclaration</label>
+                                            <input type="text" class="form-control" id="name" name="name" required="required" placeholder="Nom de la déclaration"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="declaration_type" class="form-label">Type de Déclaration</label>
+                                            <select class="form-select" id="declaration_type" name="declaration_type" required="required">
+                                                <option value="">Sélectionner un type</option>
+                                                <option value="tva">TVA</option>
+                                                <option value="is">Impôt sur les Sociétés</option>
+                                                <option value="ir">Impôt sur le Revenu</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="month" class="form-label">Mois</label>
+                                            <select class="form-select" id="month" name="month" required="required">
+                                                <option value="">Sélectionner un mois</option>
+                                                <option value="01">Janvier</option>
+                                                <option value="02">Février</option>
+                                                <option value="03">Mars</option>
+                                                <option value="04">Avril</option>
+                                                <option value="05">Mai</option>
+                                                <option value="06">Juin</option>
+                                                <option value="07">Juillet</option>
+                                                <option value="08">Août</option>
+                                                <option value="09">Septembre</option>
+                                                <option value="10">Octobre</option>
+                                                <option value="11">Novembre</option>
+                                                <option value="12">Décembre</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exercise" class="form-label">Exercice</label>
+                                            <input type="text" class="form-control" id="exercise" name="exercise" required="required" placeholder="Ex: 2025"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="company_id" class="form-label">Société</label>
+                                            <select class="form-select" id="company_id" name="company_id" required="required">
+                                                <option value="">Sélectionner une société</option>
+                                                <t t-foreach="companies" t-as="company">
+                                                    <option t-att-value="company.id" t-esc="company.name"/>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <a href="/fr/fiscal/declarations" class="btn btn-secondary me-2">Annuler</a>
+                                            <button type="submit" class="btn btn-primary">Créer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
